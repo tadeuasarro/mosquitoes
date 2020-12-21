@@ -15,3 +15,9 @@
   width: 90px;
   position: absolute;
 }
+
+body {
+  background-image: url('./img/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}

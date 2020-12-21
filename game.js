@@ -1,5 +1,6 @@
 let height = 0;
 let width = 0;
+let hitPoints = 2;
 
 const gameScreen = () => {
   height = window.innerHeight;
@@ -14,6 +15,12 @@ window.addEventListener('resize', () => {
 
 const randomPos = () => {
 
+  if(hitPoints == 0){
+    alert('Game over');
+  }
+
+  document.body.innerHTML = '';
+
   let posX = Math.floor(Math.random() * width) - 90;
   let posY = Math.floor(Math.random() * height) - 90;
 
@@ -26,6 +33,20 @@ const randomPos = () => {
   mosquitoe.style.left = posX + 'px';
   mosquitoe.style.top = posY + 'px';
   randomSide(mosquitoe);
+
+  const my_var = window.setInterval(
+    () => {
+      clearInterval(my_var);
+      randomPos();
+      hitPoints -= 1;
+    },
+    3000
+  );
+
+  mosquitoe.addEventListener('click', () => {
+    clearInterval(my_var);
+    randomPos();
+  });
 
   document.body.appendChild(mosquitoe);
 
@@ -45,14 +66,3 @@ const randomSide = (mosquitoe) => {
   }
 };
 
-const createMosquitoe = () => {
-  window.setInterval(
-    () => {
-      document.body.innerHTML = '';
-      randomPos();
-    },
-    3000
-  );
-}
-
-createMosquitoe();
