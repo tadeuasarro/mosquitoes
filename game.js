@@ -25,6 +25,7 @@ const randomPos = () => {
   mosquitoe.classList.add('mosquitoe' + randomSize());
   mosquitoe.style.left = posX + 'px';
   mosquitoe.style.top = posY + 'px';
+  randomSide(mosquitoe);
 
   document.body.appendChild(mosquitoe);
 
@@ -36,6 +37,12 @@ window.addEventListener('load', () => {
 
 const randomSize = () => {
   return(Math.ceil(Math.random() * 3));
+};
+
+const randomSide = (mosquitoe) => {
+  if((Math.random() < 0.5) ? true : false){
+    mosquitoe.style.transform = 'scale(-1, 1)';
+  }
 };
 
 randomSize();
