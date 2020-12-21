@@ -45,4 +45,14 @@ const randomSide = (mosquitoe) => {
   }
 };
 
-randomSize();
+const createMosquitoe = () => {
+  window.setInterval(
+    () => {
+      document.body.innerHTML = '';
+      randomPos();
+    },
+    3000
+  );
+}
+
+createMosquitoe();
