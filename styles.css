@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .mosquitoe1 {
   height: 50px;
   width: 50px;
@@ -20,4 +26,33 @@ body {
   background-image: url('./img/bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.restart-button {
+  border: solid 5px darkgreen;
+  border-radius: 10px;
+  padding: 1%;
+  color: black;
+  background-color: green;
+  font-size: x-large;
+}
+
+.restart-button:hover,
+.game-start-button {
+  cursor: pointer;
+}
+
+.game-start-button {
+  border: black solid 5px;
+  border-radius: 10px;
+  padding: 1%;
+  color: black;
+  background-color: orange;
+  font-size: x-large;
+  margin: 0 20px;
 }

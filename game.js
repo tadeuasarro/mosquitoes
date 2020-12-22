@@ -1,6 +1,6 @@
 let height = 0;
 let width = 0;
-let hitPoints = 2;
+let hitPoints = 3;
 
 const gameScreen = () => {
   height = window.innerHeight;
@@ -13,11 +13,8 @@ window.addEventListener('resize', () => {
   gameScreen();
 });
 
-const randomPos = () => {
-
-  if(hitPoints == 0){
-    alert('Game over');
-  }
+const randomPos = (time) => {
+  gameOver();
 
   document.body.innerHTML = '';
 
@@ -37,15 +34,15 @@ const randomPos = () => {
   const my_var = window.setInterval(
     () => {
       clearInterval(my_var);
-      randomPos();
       hitPoints -= 1;
+      randomPos(time);
     },
-    3000
+    time
   );
 
   mosquitoe.addEventListener('click', () => {
     clearInterval(my_var);
-    randomPos();
+    randomPos(time);
   });
 
   document.body.appendChild(mosquitoe);
@@ -53,7 +50,7 @@ const randomPos = () => {
 };
 
 window.addEventListener('load', () => {
-  randomPos();
+  gameStart();
 });
 
 const randomSize = () => {
@@ -66,3 +63,68 @@ const randomSide = (mosquitoe) => {
   }
 };
 
+const gameOver = () => {
+  if(hitPoints == 0){
+    document.body.innerHTML = '';
+
+    const gameOver = document.createElement('img');
+    gameOver.src = './img/game_over.png';
+
+    const restart = document.createElement('span');
+    restart.classList.add('restart-button');
+    restart.innerHTML = 'Try again!'
+
+    restart.addEventListener('click', () => {
+      gameStart();
+    });
+
+    document.body.appendChild(gameOver);
+    document.body.appendChild(restart);
+    return error
+  }
+};
+
+const gameStart = () => {
+  hitPoints = 3;
+
+  document.body.innerHTML = '';
+
+  const game = document.createElement('img');
+  game.src = './img/game.png';
+
+  document.body.appendChild(game);
+
+  const container = document.createElement('div');
+  container.style.display = 'flex';
+
+  const easy = document.createElement('span');
+  easy.classList.add('game-start-button');
+  easy.innerHTML = 'Easy';
+
+  easy.addEventListener('click', () => {
+    randomPos(3000)
+  });
+
+  const medium = document.createElement('span');
+  medium.classList.add('game-start-button');
+  medium.innerHTML = 'Medium';
+
+  medium.addEventListener('click', () => {
+    randomPos(2000)
+  });
+
+  const hard = document.createElement('span');
+  hard.classList.add('game-start-button');
+  hard.innerHTML = 'Hard';
+
+  hard.addEventListener('click', () => {
+    randomPos(1000)
+  });
+
+  container.appendChild(easy);
+  container.appendChild(medium);
+  container.appendChild(hard);
+
+  document.body.appendChild(container);
+
+};
