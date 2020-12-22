@@ -1,6 +1,18 @@
 let height = 0;
 let width = 0;
 let hitPoints = 3;
+let score = 0;
+
+let gamePlaying = null;
+
+window.addEventListener(
+  'load',
+  () => {
+    gamePlaying = document.getElementById('container');
+    gameStart();
+  },
+  false
+);
 
 const gameScreen = () => {
   height = window.innerHeight;
@@ -16,7 +28,7 @@ window.addEventListener('resize', () => {
 const randomPos = (time) => {
   gameOver();
 
-  document.body.innerHTML = '';
+  gamePlaying.innerHTML = '';
 
   let posX = Math.floor(Math.random() * width) - 90;
   let posY = Math.floor(Math.random() * height) - 90;
@@ -34,6 +46,7 @@ const randomPos = (time) => {
   const my_var = window.setInterval(
     () => {
       clearInterval(my_var);
+      document.getElementById('life-' + hitPoints).src = "./img/coracao_vazio.png";
       hitPoints -= 1;
       randomPos(time);
     },
@@ -42,16 +55,13 @@ const randomPos = (time) => {
 
   mosquitoe.addEventListener('click', () => {
     clearInterval(my_var);
+    score += 1;
     randomPos(time);
   });
 
-  document.body.appendChild(mosquitoe);
+  gamePlaying.appendChild(mosquitoe);
 
 };
-
-window.addEventListener('load', () => {
-  gameStart();
-});
 
 const randomSize = () => {
   return(Math.ceil(Math.random() * 3));
@@ -65,34 +75,41 @@ const randomSide = (mosquitoe) => {
 
 const gameOver = () => {
   if(hitPoints == 0){
-    document.body.innerHTML = '';
+    gamePlaying.innerHTML = '';
 
     const gameOver = document.createElement('img');
     gameOver.src = './img/game_over.png';
+
+    const scoreCounter = document.createElement('span');
+    scoreCounter.innerHTML = 'Your score: ' + score;
+    scoreCounter.classList.add('score-counter');
 
     const restart = document.createElement('span');
     restart.classList.add('restart-button');
     restart.innerHTML = 'Try again!'
 
     restart.addEventListener('click', () => {
+      resetLives();
       gameStart();
     });
 
-    document.body.appendChild(gameOver);
-    document.body.appendChild(restart);
+    gamePlaying.appendChild(gameOver);
+    gamePlaying.appendChild(scoreCounter);
+    gamePlaying.appendChild(restart);
     return error
   }
 };
 
 const gameStart = () => {
+  score = 0;
   hitPoints = 3;
 
-  document.body.innerHTML = '';
+  gamePlaying.innerHTML = '';
 
   const game = document.createElement('img');
   game.src = './img/game.png';
 
-  document.body.appendChild(game);
+  gamePlaying.appendChild(game);
 
   const container = document.createElement('div');
   container.style.display = 'flex';
@@ -125,6 +142,12 @@ const gameStart = () => {
   container.appendChild(medium);
   container.appendChild(hard);
 
-  document.body.appendChild(container);
+  gamePlaying.appendChild(container);
 
 };
+
+const resetLives = () => {
+  for(let i = 1; i <= 3; i += 1){
+    document.getElementById('life-' + i).src = "./img/coracao_cheio.png";
+  }
+}
