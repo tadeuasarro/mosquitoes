@@ -46,7 +46,9 @@ const randomPos = (time) => {
   const my_var = window.setInterval(
     () => {
       clearInterval(my_var);
-      document.getElementById('life-' + hitPoints).src = "./img/coracao_vazio.png";
+      if(hitPoints > 0){
+        document.getElementById('life-' + hitPoints).src = "./img/coracao_vazio.png";
+      }
       hitPoints -= 1;
       randomPos(time);
     },
@@ -74,7 +76,7 @@ const randomSide = (mosquitoe) => {
 };
 
 const gameOver = () => {
-  if(hitPoints == 0){
+  if(hitPoints < 0){
     gamePlaying.innerHTML = '';
 
     const gameOver = document.createElement('img');
@@ -96,7 +98,7 @@ const gameOver = () => {
     gamePlaying.appendChild(gameOver);
     gamePlaying.appendChild(scoreCounter);
     gamePlaying.appendChild(restart);
-    return error
+    throw 'Game over!';
   }
 };
 
